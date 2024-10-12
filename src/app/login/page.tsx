@@ -12,12 +12,16 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // Use next/navigation
 import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
+import { auth, googleProvider } from "../../../firebase.config";
 
 const LoginPage = () => {
+  const router = useRouter(); // Use the router for navigation
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (values: FieldValues) => {
@@ -39,6 +43,28 @@ const LoginPage = () => {
 
   const handleDummyLogin = async (email: string, password: string) => {
     await handleLogin({ email, password });
+  };
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      const user = result.user;
+    
+
+      if (token && user) {
+        toast.success("Logged in with Google");
+
+        storeUserInfo({ accessToken: token });
+        router.push("/dashboard/user");
+      }
+    } catch (error: any) {
+      toast.error("Google login failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -125,19 +151,22 @@ const LoginPage = () => {
         </PetForm>
 
         <Box mt={2}>
-          <Button fullWidth variant="outlined" disabled>
-            Google Login
+          <Button
+            fullWidth
+            variant="outlined"
+            onClick={handleGoogleLogin}
+            disabled={loading}
+          >
+            {loading ? <CircularProgress size={24} /> : "Login with Google"}
           </Button>
         </Box>
 
         <Card
           sx={{
-            marginTop: 3,   
+            marginTop: 3,
             textAlign: "center",
-           
           }}
         >
-          
           <Box
             sx={{
               display: "flex",
