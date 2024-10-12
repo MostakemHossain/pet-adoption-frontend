@@ -1,7 +1,5 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import Image from "next/image";
-import React from "react";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
 const SecondBanner = () => {
   return (
@@ -35,7 +33,7 @@ const SecondBanner = () => {
                 color: "white",
               }}
             >
-              Want a pet for your loved ones?
+              Looking to welcome a furry friend into your family?
             </Typography>
             <Typography
               sx={{
@@ -44,11 +42,12 @@ const SecondBanner = () => {
               color="white"
               py={4}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-              tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+              Explore our range of adorable pets, ready to bring joy and love
+              into your home. Find your perfect companion today.
             </Typography>
-            <Button component="a" href="#allPets">View Puppies </Button>
-
+            <Button component="a" href="#allPets">
+              View Puppies{" "}
+            </Button>
           </Box>
         </Box>
       </Container>

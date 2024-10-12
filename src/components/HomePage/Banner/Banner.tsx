@@ -1,6 +1,5 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import Image from "next/image";
-import React from "react";
 
 const Banner = () => {
   return (
@@ -83,13 +82,21 @@ const Banner = () => {
             >
               Ready To Adopt!
             </Typography>
-            <Typography sx={{
-              maxWidth: "60ch",
-            }} color="gray" py={4}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-              tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+            <Typography
+              sx={{
+                maxWidth: "60ch",
+              }}
+              color="gray"
+              py={4}
+            >
+              Every pet deserves a loving home, and every home can be brighter
+              with a furry friend. Whether you are looking for a playful puppy,
+              a gentle cat, or a loyal companion, your perfect match is waiting.
+              Adopt, don’t shop—because love doesn’t come with a price tag
             </Typography>
-            <Button component="a" href="#allPets">View Puppies </Button>
+            <Button component="a" href="#allPets">
+              View Puppies{" "}
+            </Button>
           </Box>
         </Box>
       </Container>

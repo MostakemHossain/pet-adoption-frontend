@@ -1,16 +1,15 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
 import Image from "next/image";
-import React from "react";
 
 const HowWeWork = () => {
   return (
     <Container sx={{ marginTop: 12 }}>
       <Box textAlign="center">
         <Typography color="secondary.main" fontSize={20}>
-          How We Work
+          Our Adoption Journey
         </Typography>
         <Typography fontSize={45} fontWeight={700}>
-          Pet Adoption Process
+          The Path to Finding Your Pet
         </Typography>
       </Box>
       <Grid container spacing={4} mt={5}>
@@ -44,11 +43,12 @@ const HowWeWork = () => {
               fontWeight={700}
               fontSize={22}
             >
-              Find your pet
+              Discover Your Companion
             </Typography>
             <Typography color="gray">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-              tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+              Begin your journey by exploring our wide selection of pets waiting
+              for a loving home. Each pet is unique, and we are here to help you
+              find your perfect match.
             </Typography>
           </Box>
         </Grid>
@@ -82,11 +82,12 @@ const HowWeWork = () => {
               fontWeight={700}
               fontSize={22}
             >
-              Know your pet
+              Learn About Your Pet
             </Typography>
             <Typography color="gray">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-              tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+              Get to know the personality, habits, and special care needs of
+              your potential new furry friend. Our team is here to answer all
+              your questions.
             </Typography>
           </Box>
         </Grid>
@@ -120,11 +121,12 @@ const HowWeWork = () => {
               fontWeight={700}
               fontSize={22}
             >
-              Take your pet home
+              Welcome Them Home
             </Typography>
             <Typography color="gray">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-              tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+              Once you have found your match, we make the process easy and
+              supportive, helping your new pet transition smoothly into their
+              forever home.
             </Typography>
           </Box>
         </Grid>
@@ -135,22 +137,22 @@ const HowWeWork = () => {
           {
             icon: "https://tailwag.progressionstudios.com/wp-content/uploads/2022/04/icon-1.png",
             count: 1765,
-            label: "Happy Dogs",
+            label: "Pets Rehomed",
           },
           {
             icon: "https://tailwag.progressionstudios.com/wp-content/uploads/2022/04/icon-2.png",
             count: 387,
-            label: "Happy Dogs",
+            label: "Volunteers",
           },
           {
             icon: "https://tailwag.progressionstudios.com/wp-content/uploads/2022/04/icon-3.png",
             count: 567,
-            label: "Happy Dogs",
+            label: "Successful Adoptions",
           },
           {
             icon: "https://tailwag.progressionstudios.com/wp-content/uploads/2022/04/icon-4.png",
             count: 1670,
-            label: "Happy Dogs",
+            label: "Happy Families",
           },
         ].map((item, index) => (
           <Grid item xs={12} sm={6} md={3} key={index}>
