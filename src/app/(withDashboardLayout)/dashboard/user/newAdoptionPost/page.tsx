@@ -6,10 +6,16 @@ import PetInput from "@/components/Forms/PetInput";
 import PetSelect from "@/components/Forms/PetSelect";
 import { useCreatePetPostMutation } from "@/redux/api/petsApi";
 import { modifyPayload } from "@/utils/modifyPayload";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
-import React from "react";
+import {
+  Button,
+  CircularProgress,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
 import { FieldValues } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const validationSchema = z.object({
@@ -21,22 +27,17 @@ const validationSchema = z.object({
   location: z.string().min(3, "Location must be at least 3 characters"),
   description: z.string().min(3, "Description must be at least 3 characters"),
   temperament: z.string().min(3, "Temperament must be at least 3 characters"),
-
   medicalHistory: z
     .string()
     .min(3, "Medical History must be at least 3 characters"),
   adoptionRequirements: z
     .string()
     .min(3, "Adoption Requirements must be at least 3 characters"),
-  // file: z.object({
-  //   fileName: z.string(),
-  //   type: z.string(),
-  //   size: z.number(),
-  // }),
 });
 
 const NewAdoptionPostPage = () => {
   const [createPetPost] = useCreatePetPostMutation();
+  const [loading, setLoading] = useState(false); 
 
   const species = [
     { value: "DOG", label: "Dog" },
@@ -51,12 +52,20 @@ const NewAdoptionPostPage = () => {
   ];
 
   const handleFormSubmit = async (values: FieldValues) => {
+    setLoading(true); 
     values.age = parseInt(values.age);
     const data = modifyPayload(values);
 
     try {
-      const res = await createPetPost(data);
+      const res = await createPetPost(data).unwrap();
+      console.log(res);
+      if (res.id) {
+        toast.success("Pet Added successfully");
+      }
     } catch (err: any) {
+      toast.error("Failed to add pet"); 
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -70,12 +79,14 @@ const NewAdoptionPostPage = () => {
         padding: "30px",
       }}
     >
-      <Typography variant="h4" align="center" gutterBottom>
+      <Typography sx={{
+        color:"#F9524E"
+      }} variant="h3" align="center" gutterBottom>
         New Adoption Post
       </Typography>
       <PetForm
         onSubmit={handleFormSubmit}
-        // resolver={zodResolver(validationSchema)}
+        
         defaultValues={{
           name: "",
           species: "",
@@ -90,93 +101,88 @@ const NewAdoptionPostPage = () => {
         }}
       >
         <Grid container spacing={2} my={1}>
-          <Grid item md={4}>
-            <PetInput name="name" label="Name" type="name" fullWidth={true} />
+          <Grid item xs={12} md={4}>
+            <PetInput name="name" label="Name" type="text" fullWidth />
           </Grid>
-          <Grid item md={4}>
+          <Grid item xs={12} md={4}>
             <PetSelect
               menu={species}
               name="species"
               label="Species"
-              fullWidth={true}
+              fullWidth
             />
           </Grid>
-          <Grid item md={4}>
-            <PetInput name="breed" label="Breed" type="text" fullWidth={true} />
+          <Grid item xs={12} md={4}>
+            <PetInput name="breed" label="Breed" type="text" fullWidth />
           </Grid>
         </Grid>
         <Grid container spacing={2} my={1}>
-          <Grid item md={4}>
-            <PetInput name="age" label="Age" type="number" fullWidth={true} />
+          <Grid item xs={12} md={4}>
+            <PetInput name="age" label="Age" type="number" fullWidth />
           </Grid>
-          <Grid item md={4}>
-            <PetSelect menu={sizes} name="size" label="Size" fullWidth={true} />
+          <Grid item xs={12} md={4}>
+            <PetSelect menu={sizes} name="size" label="Size" fullWidth />
           </Grid>
-          <Grid item md={4}>
-            <PetInput
-              name="location"
-              label="Location"
-              type="text"
-              fullWidth={true}
-            />
+          <Grid item xs={12} md={4}>
+            <PetInput name="location" label="Location" type="text" fullWidth />
           </Grid>
         </Grid>
         <Grid container spacing={2} my={1}>
-          <Grid item md={12}>
+          <Grid item xs={12}>
             <PetInput
               name="description"
               label="Description"
               type="text"
-              fullWidth={true}
+              fullWidth
             />
           </Grid>
-          <Grid item md={6}>
+          <Grid item xs={12} md={6}>
             <PetInput
               name="temperament"
               label="Temperament"
               type="text"
-              fullWidth={true}
+              fullWidth
             />
           </Grid>
-          <Grid item md={6}>
+          <Grid item xs={12} md={6}>
             <PetInput
               name="medicalHistory"
               label="Medical History"
               type="text"
-              fullWidth={true}
+              fullWidth
             />
           </Grid>
         </Grid>
         <Grid container spacing={2} my={1}>
-          <Grid item md={12}>
+          <Grid item xs={12}>
             <PetInput
               name="adoptionRequirements"
               label="Adoption Requirements"
               type="text"
-              fullWidth={true}
+              fullWidth
             />
           </Grid>
         </Grid>
         <Grid container spacing={2} my={1}>
-          <Grid item md={12}>
+          <Grid item xs={12}>
             <PetFileUploader
               name="file"
               label="Upload Image"
               accept="image/*"
               multiple={false}
               sx={{ display: "none" }}
-              required={true}
-              fullWidth={true}
+              required
+              fullWidth
             />
           </Grid>
         </Grid>
         <Button
-          sx={{
-            margin: "10px 0px",
-          }}
+          sx={{ margin: "10px 0px" }}
           type="submit"
+          disabled={loading} 
         >
-          Submit
+          {loading ? <CircularProgress size={24} /> : "Submit"}{" "}
+         
         </Button>
       </PetForm>
     </Container>
